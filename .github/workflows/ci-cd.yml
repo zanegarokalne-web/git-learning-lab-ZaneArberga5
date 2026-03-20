@@ -1,0 +1,25 @@
+name: Students file CI/CD
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  check-students-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lejupieladet repozitorija kodu
+        uses: actions/checkout@v4
+      - name: Parbaudit, vai eksiste Students.md
+        run: |
+          if [ ! -f Students.md ]; then
+            echo "Kļūda: fails Students.md nav atrasts!"
+            exit 1
+          fi
+      - name: Paradit Students.md saturu
+        run: cat Students.md
+      - name: Testa solis
+        run: echo "Parbaude veiksmigi izpildita"
+      - name: Deploy (demo solis)
+        if: success()
+        run: echo "Deploy veiksmīgs"
