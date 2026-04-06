@@ -1,0 +1,3 @@
+<h1>Sveiki! Šī lapa strādā no Volume!</h1>
+<p>Zane Arberga: esmu pabeigusi 8. uzdevumu.</p>
+<h2>Mana lapa ir atjaunota bez Docker komandām!</h2>
