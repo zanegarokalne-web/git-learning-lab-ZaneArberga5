@@ -24,3 +24,22 @@ jobs:
       - name: Deploy to S3
         run: |
           aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --exclude ".git*" --exclude ".github*"
+# Šis solis nostrādā tikai tad, ja deploy bija VEIKSMĪGS
+    - name: Report Success Metric to CloudWatch
+      if: success()
+      run: |
+        aws cloudwatch put-metric-data \
+          --metric-name DeploySuccess \
+          --namespace StudentDeployments \
+          --value 1 \
+          --unit Count
+
+    # Šis solis nostrādā tikai tad, ja deploy NEIZDEVĀS
+    - name: Report Failure Metric to CloudWatch
+      if: failure()
+      run: |
+        aws cloudwatch put-metric-data \
+          --metric-name DeployFailure \
+          --namespace StudentDeployments \
+          --value 1 \
+          --unit Count
