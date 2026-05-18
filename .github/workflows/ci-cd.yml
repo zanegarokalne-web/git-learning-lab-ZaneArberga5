@@ -13,7 +13,7 @@ jobs:
       - name: Parbaudit, vai eksiste Students.md
         run: |
           if [ ! -f Students.md ]; then
-            echo "Kļūda: fails Students.md nav atrasts!"
+            echo "Kļūda: Students.md nav atrasts!"
             exit 1
           fi
       - name: Paradit Students.md saturu
@@ -22,7 +22,7 @@ jobs:
         run: echo "Parbaude veiksmigi izpildita"
       - name: Deploy (demo solis)
         if: success()
-        run: echo "Deploy veiksmīgs"
+        run: echo "Deploy veiksmigs"
       - name: Parbaudit Versijas failu
         run: |
           if [ ! -f Version.md ]; then
@@ -30,12 +30,12 @@ jobs:
             exit 1
           fi
       - name: Paradit versiju
+        run: cat Version.md
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::253264393860:role/GitHub-to-S3-Role
           aws-region: us-east-1
-
       - name: Report Success Metric to CloudWatch
         run: |
           aws cloudwatch put-metric-data \
@@ -43,3 +43,4 @@ jobs:
             --namespace StudentDeployments \
             --value 1 \
             --unit Count
+            
